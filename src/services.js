@@ -4,6 +4,7 @@ import {
   generateRefreshToken,
 } from "../src/middlewares/token.js";
 import bcrypt from "bcrypt";
+import { GraphQLError } from "graphql";
 export const UserService = {
   getUsers: async () => {
     try {
