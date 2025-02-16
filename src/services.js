@@ -1,4 +1,9 @@
 import { Prisma } from "@prisma/client";
+import { GraphQLError } from "graphql";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+} from '../src/middlewares/token.js'
 
 export const UserService = {
   getUsers: async () => {
@@ -37,6 +42,42 @@ export const UserService = {
       return newUser;
     } catch (error) {
       throw error;
+    }
+  },
+  login: async (email, password) => {
+    try {
+      const user = await prisma.user.findUnique({
+        where: { email },
+      });
+
+      if (!user) {
+        throwCustomError(
+          "Invalid email or password",
+          ErrorTypes.BAD_USER_INPUT
+        );
+      }
+
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+
+      if (!isPasswordValid) {
+        throwCustomError(
+          "Invalid email or password",
+          ErrorTypes.BAD_USER_INPUT
+        );
+      }
+
+      const token = generateAccessToken(user);
+      const refreshToken = generateRefreshToken(user);
+      return {
+        accessToken: token,
+        refreshToken,
+        user,
+      };
+    } catch (error) {
+      if (error instanceof GraphQLError) {
+        throw error;
+      }
+      throwCustomError(error.message, ErrorTypes.INTERNAL_SERVER_ERROR);
     }
   },
 };
