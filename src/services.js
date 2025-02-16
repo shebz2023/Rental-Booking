@@ -1,10 +1,9 @@
-import { Prisma } from "@prisma/client";
-import { GraphQLError } from "graphql";
+import { ErrorTypes, throwCustomError, prisma } from "../src/utils/index.js";
 import {
   generateAccessToken,
   generateRefreshToken,
-} from '../src/middlewares/token.js'
-
+} from "../src/middlewares/token.js";
+import bcrypt from "bcrypt";
 export const UserService = {
   getUsers: async () => {
     try {
@@ -13,7 +12,7 @@ export const UserService = {
       throw new Error(`Failed to get tasks: ${error.message}`);
     }
   },
-  signUp: async (email, password, role) => {
+  signUp: async (email, name, password, role) => {
     try {
       // Check if the user already exists
       const existingUser = await prisma.user.findUnique({

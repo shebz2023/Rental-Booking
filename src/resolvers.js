@@ -9,7 +9,7 @@ export const resolvers = {
   Mutation: {
     signUp: async (_, args, context) => {
       const { email, name, password, role } = args;
-      const payload = await UserService.createUser(email, name, password, role);
+      const payload = await UserService.signUp(email, name, password, role);
       return payload;
     },
     login: async (_, args, context) => {

@@ -14,10 +14,11 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid()) @db.Uuid
   email     String   @unique
   name      String?
-  role      String   @default("RENTER") // "RENTER" or "HOST"
+  password  String?
+  role      String   @default("RENTER") //renter or host
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -26,12 +27,12 @@ model User {
   bookings   Booking[]  
 }
 model Property {
-  id          Int      @id @default(autoincrement())
+  id          String      @id @default(uuid()) @db.Uuid
   title       String
   description String
   pricePerNight Float
   location    String
-  hostId      Int
+  hostId      String  @db.Uuid
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -41,12 +42,12 @@ model Property {
 }
 
 model Booking {
-  id          Int      @id @default(autoincrement())
+  id          String          @id @default(uuid()) @db.Uuid
   checkInDate DateTime
   checkOutDate DateTime
   status      String   @default("PENDING") // "PENDING", "CONFIRMED", or "CANCELED"
-  renterId    Int
-  propertyId  Int
+  renterId    String @db.Uuid
+  propertyId  String  @db.Uuid
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
