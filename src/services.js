@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 
-export const UserServices = {
+export const UserService = {
   getUsers: async () => {
     try {
       return await prisma.task.findMany();

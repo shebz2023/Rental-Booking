@@ -44,7 +44,8 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    createUser(email: String!, name: String, role: Role): User!
+    signUp(email: String!, name: String, role: Role): User!
+    login(email: String!, password: String!): AuthResponse!
     createProperty(
       title: String!
       description: String!
@@ -86,5 +87,10 @@ export const typeDefs = gql`
     PENDING
     CONFIRMED
     CANCELED
+  }
+  type AuthResponse {
+    accessToken: String!
+    refreshToken: String!
+    user: User!
   }
 `;
