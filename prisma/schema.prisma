@@ -12,3 +12,45 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  role      String   @default("RENTER") // "RENTER" or "HOST"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationships
+  properties Property[] 
+  bookings   Booking[]  
+}
+model Property {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  pricePerNight Float
+  location    String
+  hostId      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships
+  host      User      @relation(fields: [hostId], references: [id])
+  bookings  Booking[] 
+}
+
+model Booking {
+  id          Int      @id @default(autoincrement())
+  checkInDate DateTime
+  checkOutDate DateTime
+  status      String   @default("PENDING") // "PENDING", "CONFIRMED", or "CANCELED"
+  renterId    Int
+  propertyId  Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships
+  renter    User     @relation(fields: [renterId], references: [id])
+  property  Property @relation(fields: [propertyId], references: [id])
+}
