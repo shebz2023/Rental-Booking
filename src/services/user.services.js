@@ -8,9 +8,9 @@ import { GraphQLError } from "graphql";
 export const userService = {
   getUsers: async () => {
     try {
-      return await prisma.task.findMany();
+      return await prisma.user.findMany();
     } catch (error) {
-      throw new Error(`Failed to get tasks: ${error.message}`);
+      throw new Error(`Failed to get users: ${error.message}`);
     }
   },
   signUp: async (email, name, password, role) => {

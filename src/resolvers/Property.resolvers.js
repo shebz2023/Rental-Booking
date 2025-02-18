@@ -1,35 +1,39 @@
 import { propertyService } from "../services/Property.service.js";
+import { validateUserAccess } from "../utils/request-validator.js";
 export const propertyResolver = {
   Query: {
-    getProperty: (_, args) => {
+    property: (_, args) => {
       const { id } = args;
-      const payload = propertyService.getProperty(id);
+      const payload = propertyService.Property(id);
       return payload;
     },
 
-    getProperties: async () => {
-      const payload = propertyService.getProperties();
+    properties: async () => {
+      const payload = propertyService.Properties();
       return payload;
     },
   },
   Mutation: {
-    createOneProperty: (_, args, context) => {
-      const { property } = args.input;
-      const payload = propertyService.createOneProperty(property, context.user);
+    createProperty: (_, args, context) => {
+      validateUserAccess(context);
+      const { input } = args;
+      const payload = propertyService.createProperty(input, context.user);
       return payload;
     },
-    updateOneProperty: async (_, args, context) => {
-      const { id, update } = args.input;
-      const payload = await propertyService.updateOneProperty(
+    updateProperty: async (_, args, context) => {
+      validateUserAccess(context);
+      const { id, input } = args;
+      const payload = await propertyService.updateProperty(
         id,
-        update,
+        input,
         context.user
       );
       return payload;
     },
-    deleteOneProperty: async (_, args, context) => {
-      const { id } = args.input;
-      const payload = await propertyService.deleteOneProperty(id);
+    deleteProperty: async (_, args, context) => {
+      validateUserAccess(context);
+      const { id } = args;
+      const payload = await propertyService.deleteProperty(id);
       return payload;
     },
   },

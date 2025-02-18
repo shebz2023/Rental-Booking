@@ -24,7 +24,9 @@ export const authorizeUser = async ({ req, res }) => {
 
   if (
     req.body.operationName === "SignUp" ||
-    req.body.operationName === "Login"
+    req.body.operationName === "Login" ||
+    req.body.operationName === "Properties" ||
+    req.body.operationName === "Property"
   ) {
     return null;
   }

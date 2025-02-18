@@ -21,11 +21,14 @@ model User {
   role      String   @default("RENTER") //renter or host
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  propertiesCreated  Property[] @relation("PropertyCreatedBy")
+  bookingsCreated Booking[]   @relation("BookingCreatedBy")
 
   // Relationships
   properties Property[] 
   bookings   Booking[]  
 }
+
 model Property {
   id          String      @id @default(uuid()) @db.Uuid
   title       String
@@ -35,6 +38,8 @@ model Property {
   hostId      String  @db.Uuid
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  createdBy   User     @relation("PropertyCreatedBy", fields: [createdById], references: [id])
+  createdById    String     @db.Uuid
 
   // Relationships
   host      User      @relation(fields: [hostId], references: [id])
@@ -50,6 +55,8 @@ model Booking {
   propertyId  String  @db.Uuid
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  createdBy   User     @relation("BookingCreatedBy", fields: [createdById], references: [id])
+  createdById    String     @db.Uuid
 
   // Relationships
   renter    User     @relation(fields: [renterId], references: [id])

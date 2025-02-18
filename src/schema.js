@@ -7,6 +7,7 @@ export const typeDefs = gql`
     role: Role!
     createdAt: String!
     updatedAt: String!
+    createdBy: User!
     properties: [Property!]!
     bookings: [Booking!]!
   }
@@ -20,6 +21,7 @@ export const typeDefs = gql`
     host: User!
     createdAt: String!
     updatedAt: String!
+    createdBy: User!
     bookings: [Booking!]!
   }
 
@@ -46,13 +48,7 @@ export const typeDefs = gql`
   type Mutation {
     signUp(email: String!, name: String, password: String, role: Role): User!
     login(email: String!, password: String!): AuthResponse!
-    createProperty(
-      title: String!
-      description: String!
-      pricePerNight: Float!
-      location: String!
-      hostId: ID!
-    ): Property!
+    createProperty(input: PropertyInput): Property!
     createBooking(
       checkInDate: String!
       checkOutDate: String!
@@ -61,22 +57,16 @@ export const typeDefs = gql`
       propertyId: ID!
     ): Booking!
     updateUser(id: ID!, email: String, name: String, role: Role): User!
-    updateProperty(
-      id: ID!
-      title: String
-      description: String
-      pricePerNight: Float
-      location: String
-    ): Property!
+    updateProperty(id: ID!, input: PropertyInput): Property!
     updateBooking(
       id: ID!
       checkInDate: String
       checkOutDate: String
       status: BookingStatus
     ): Booking!
-    deleteUser(id: ID!): Boolean!
-    deleteProperty(id: ID!): Boolean!
-    deleteBooking(id: ID!): Boolean!
+    deleteUser(id: ID!): User
+    deleteProperty(id: ID!): Property
+    deleteBooking(id: ID!): Booking
   }
   enum Role {
     RENTER
@@ -87,6 +77,13 @@ export const typeDefs = gql`
     PENDING
     CONFIRMED
     CANCELED
+  }
+  input PropertyInput {
+    title: String
+    description: String
+    pricePerNight: Float
+    location: String
+    hostId: ID
   }
   type AuthResponse {
     accessToken: String!
