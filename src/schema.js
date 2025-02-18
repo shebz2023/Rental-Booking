@@ -49,21 +49,10 @@ export const typeDefs = gql`
     signUp(email: String!, name: String, password: String, role: Role): User!
     login(email: String!, password: String!): AuthResponse!
     createProperty(input: PropertyInput): Property!
-    createBooking(
-      checkInDate: String!
-      checkOutDate: String!
-      status: BookingStatus
-      renterId: ID!
-      propertyId: ID!
-    ): Booking!
+    createBooking(input: BookingInput): Booking!
     updateUser(id: ID!, email: String, name: String, role: Role): User!
     updateProperty(id: ID!, input: PropertyInput): Property!
-    updateBooking(
-      id: ID!
-      checkInDate: String
-      checkOutDate: String
-      status: BookingStatus
-    ): Booking!
+    updateBooking(id: ID!, input: updateBookingInput): Booking!
     deleteUser(id: ID!): User
     deleteProperty(id: ID!): Property
     deleteBooking(id: ID!): Booking
@@ -84,6 +73,18 @@ export const typeDefs = gql`
     pricePerNight: Float
     location: String
     hostId: ID
+  }
+  input BookingInput {
+    checkInDate: String!
+    checkOutDate: String!
+    status: BookingStatus
+    renterId: ID!
+    propertyId: ID!
+  }
+  input updateBookingInput {
+    checkInDate: String
+    checkOutDate: String
+    status: BookingStatus
   }
   type AuthResponse {
     accessToken: String!

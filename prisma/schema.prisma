@@ -48,8 +48,8 @@ model Property {
 
 model Booking {
   id          String          @id @default(uuid()) @db.Uuid
-  checkInDate DateTime
-  checkOutDate DateTime
+  checkInDate String
+  checkOutDate String
   status      String   @default("PENDING") // "PENDING", "CONFIRMED", or "CANCELED"
   renterId    String @db.Uuid
   propertyId  String  @db.Uuid
