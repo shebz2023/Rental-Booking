@@ -1,11 +1,11 @@
-import { ErrorTypes, throwCustomError, prisma } from "../src/utils/index.js";
+import { ErrorTypes, throwCustomError, prisma } from "../utils/index.js";
 import {
   generateAccessToken,
   generateRefreshToken,
-} from "../src/middlewares/token.js";
+} from "../middlewares/token.js";
 import bcrypt from "bcrypt";
 import { GraphQLError } from "graphql";
-export const UserService = {
+export const userService = {
   getUsers: async () => {
     try {
       return await prisma.task.findMany();
