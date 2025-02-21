@@ -9,10 +9,19 @@ import express from "express";
 import session from "express-session";
 import passport from "passport";
 import { configurePassport } from "./utils/passport.js";
+import cors from "cors";
 
 const port = process.env.PORT || 8080;
 const app = express();
 const REDIRECT_URL = process.env.REDIRECT_URL;
+
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
 const resolvers = mergeResolvers([
   userResolvers,
