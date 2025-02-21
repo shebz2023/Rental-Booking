@@ -55,6 +55,14 @@ app.get("/api/current-user", (req, res) => {
     res.status(401).json({ error: "Not authenticated" });
   }
 });
+app.get("/api/logout", (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).json({ error: "Error logging out" });
+    }
+    res.json({ message: "Logged out successfully" });
+  });
+});
 
 const server = new ApolloServer({
   resolvers,
