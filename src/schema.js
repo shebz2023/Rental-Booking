@@ -2,7 +2,7 @@ import { gql } from "apollo-server";
 export const typeDefs = gql`
   type User {
     id: ID!
-    googleId:String
+    googleId: String
     email: String!
     name: String
     role: Role!
@@ -43,8 +43,10 @@ export const typeDefs = gql`
     user(id: ID!): User
     properties: [Property!]!
     property(id: ID!): Property
+    myProperties:[Property!]!
     bookings: [Booking!]!
     booking(id: ID!): Booking
+    myBookings: [Booking!]!
   }
 
   type Mutation {

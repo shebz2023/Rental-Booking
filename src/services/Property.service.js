@@ -114,4 +114,23 @@ export const propertyService = {
       throwCustomError(error.message, ErrorTypes.INTERNAL_SERVER_ERROR);
     }
   },
+  myProperties: async (user) => {
+    try {
+      const _properties = await prisma.property.findMany({
+        where: { createdBy: user.id },
+        include: {
+          createdBy: true,
+          host: true,
+        },
+      });
+      return _properties;
+    } catch (error) {
+      console.log("the error is ", error);
+      if (error instanceof GraphQLError) {
+        throw error;
+      }
+
+      throwCustomError(error.message, ErrorTypes.INTERNAL_SERVER_ERROR);
+    }
+  },
 };

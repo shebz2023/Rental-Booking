@@ -12,6 +12,10 @@ export const bookingResolver = {
       const payload = bookingService.bookings();
       return payload;
     },
+    myBookings: async (_, args , context) => {
+      const payload = bookingService.myBookings(context);
+      return payload;
+    },
   },
   Mutation: {
     createBooking: (_, args, context) => {

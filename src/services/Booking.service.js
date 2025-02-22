@@ -121,4 +121,23 @@ export const bookingService = {
       throwCustomError(error.message, ErrorTypes.INTERNAL_SERVER_ERROR);
     }
   },
+  myBookings: async (user) => {
+    try {
+      const _bookings = await prisma.Booking.findMany({
+        where: { createdById: user.id },
+        include: {
+          renter: true,
+          property: true,
+        },
+      });
+      return _bookings;
+    } catch (error) {
+      console.log("the issue is", error);
+      if (error instanceof GraphQLError) {
+        throw error;
+      }
+
+      throwCustomError(error.message, ErrorTypes.INTERNAL_SERVER_ERROR);
+    }
+  },
 };

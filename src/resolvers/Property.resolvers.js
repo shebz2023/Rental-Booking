@@ -12,6 +12,10 @@ export const propertyResolver = {
       const payload = propertyService.Properties();
       return payload;
     },
+    myProperties: async (_,args ,context) => {
+      const payload = propertyService.myProperties(context);
+      return payload;
+    },
   },
   Mutation: {
     createProperty: (_, args, context) => {
