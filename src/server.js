@@ -15,14 +15,19 @@ const port = process.env.PORT || 8080;
 const app = express();
 const REDIRECT_URL = process.env.REDIRECT_URL;
 
-app.use(
-  cors({
-    origin: ["http://localhost:5173"],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  })
-);
-
+app.use((req, res, next) => {
+  if (req.path === "/graphql") {
+    // Skip CORS for GraphQL Playground
+    next();
+  } else {
+    // Apply CORS for all other routes
+    cors({
+      origin: ["http://localhost:5173"],
+      credentials: true,
+      methods: ["GET", "POST", "PUT", "DELETE"],
+    })(req, res, next);
+  }
+});
 const resolvers = mergeResolvers([
   userResolvers,
   propertyResolver,

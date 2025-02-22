@@ -16,6 +16,7 @@ export const typeDefs = gql`
   type Property {
     id: ID!
     title: String!
+    image: String
     description: String!
     pricePerNight: Float!
     location: String!
@@ -70,6 +71,7 @@ export const typeDefs = gql`
   }
   input PropertyInput {
     title: String
+    image: String
     description: String
     pricePerNight: Float
     location: String
