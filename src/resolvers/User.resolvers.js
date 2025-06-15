@@ -17,5 +17,9 @@ export const userResolvers = {
       const payload = await userService.login(email, password);
       return payload;
     },
+    updateUser: async (_,args , context) =>{
+      console.log(args, context)
+      // future implemenation here
+    }
   },
 };
