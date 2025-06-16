@@ -19,7 +19,7 @@ export const userResolvers = {
     },
     updateUser: async (_,args , context) =>{
       console.log(args, context)
-      // future implemenation here
+Consider adding a TODO comment with specific tasks or remove the comment if it does not add value.
     }
   },
 };
