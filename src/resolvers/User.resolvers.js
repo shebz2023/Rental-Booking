@@ -18,7 +18,7 @@ export const userResolvers = {
       return payload;
     },
     updateUser: async (_,args , context) =>{
-      console.log(args, context)
+Replace `console.log(args, context)` with a proper logging mechanism, such as a logging library that supports different log levels and outputs.
 Consider adding a TODO comment with specific tasks or remove the comment if it does not add value.
     }
   },
